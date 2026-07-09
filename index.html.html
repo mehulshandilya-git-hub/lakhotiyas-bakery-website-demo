@@ -1,0 +1,1753 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lakhotiyas Cake & Bakers - Ecommerce Demo</title>
+  <style>
+    :root {
+      --cream: #fff7ed;
+      --paper: #fffdf8;
+      --ink: #241714;
+      --muted: #6f5f59;
+      --line: #eaded3;
+      --choco: #4c261f;
+      --cherry: #b8323c;
+      --cherry-dark: #84252e;
+      --mint: #22715d;
+      --mint-soft: #e7f4ee;
+      --blue: #284b83;
+      --gold: #c8861c;
+      --shadow: 0 18px 45px rgba(67, 31, 22, .16);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: linear-gradient(180deg, #fffaf3 0%, #f8efe9 42%, #fffdf8 100%);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: #fffdf8;
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 8px 24px rgba(76, 38, 31, .08);
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: minmax(220px, 320px) 1fr auto;
+      gap: 16px;
+      align-items: center;
+      width: min(1180px, calc(100% - 32px));
+      min-height: 78px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      color: #fff;
+      background: conic-gradient(from 120deg, var(--cherry), var(--gold), var(--mint), var(--cherry));
+      border: 2px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 8px 18px rgba(184, 50, 60, .22);
+      font-weight: 800;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1rem, 2vw, 1.45rem);
+      line-height: 1.05;
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: .78rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      height: 46px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .search span {
+      padding-left: 14px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .search input {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      outline: 0;
+      padding: 0 12px;
+      color: var(--ink);
+      background: transparent;
+    }
+
+    .search button,
+    .icon-button {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      background: var(--choco);
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink);
+      font-size: .86rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .pill strong {
+      color: var(--mint);
+    }
+
+    .cart-button {
+      position: relative;
+      display: inline-flex;
+      gap: 9px;
+      align-items: center;
+      min-height: 46px;
+      padding: 0 14px;
+      border: 0;
+      border-radius: var(--radius);
+      color: #fff;
+      background: var(--cherry);
+      font-weight: 800;
+      box-shadow: 0 10px 25px rgba(184, 50, 60, .25);
+    }
+
+    .cart-button span:first-child {
+      font-size: 1.1rem;
+    }
+
+    .cart-count {
+      display: grid;
+      min-width: 22px;
+      height: 22px;
+      place-items: center;
+      padding: 0 6px;
+      border-radius: 99px;
+      background: #fff;
+      color: var(--cherry);
+      font-size: .78rem;
+    }
+
+    .hero {
+      min-height: 520px;
+      color: #fff;
+      background-image:
+        linear-gradient(90deg, rgba(36, 23, 20, .86) 0%, rgba(36, 23, 20, .62) 42%, rgba(36, 23, 20, .12) 82%),
+        url("lakhotiyas-hero.png");
+      background-position: center;
+      background-size: cover;
+    }
+
+    .hero-inner {
+      display: grid;
+      align-content: center;
+      width: min(1180px, calc(100% - 32px));
+      min-height: 520px;
+      margin: 0 auto;
+      padding: 56px 0 80px;
+    }
+
+    .hero-copy {
+      width: min(620px, 100%);
+    }
+
+    .hero h2 {
+      margin: 18px 0 14px;
+      max-width: 12ch;
+      font-size: clamp(2.6rem, 7vw, 5.8rem);
+      line-height: .9;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0 0 24px;
+      max-width: 58ch;
+      color: rgba(255, 255, 255, .9);
+      font-size: clamp(1rem, 2vw, 1.17rem);
+      line-height: 1.55;
+    }
+
+    .hero-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .primary,
+    .secondary,
+    .ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      font-weight: 800;
+    }
+
+    .primary {
+      color: #fff;
+      background: var(--cherry);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, .24);
+    }
+
+    .secondary {
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .ghost {
+      color: #fff;
+      background: rgba(255, 255, 255, .13);
+      border-color: rgba(255, 255, 255, .28);
+      backdrop-filter: blur(8px);
+    }
+
+    .store-strip {
+      transform: translateY(-36px);
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto -8px;
+      border: 1px solid rgba(234, 222, 211, .82);
+      border-radius: var(--radius);
+      background: #fffdf8;
+      box-shadow: var(--shadow);
+    }
+
+    .strip-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .strip-item {
+      min-height: 92px;
+      padding: 18px;
+      border-right: 1px solid var(--line);
+    }
+
+    .strip-item:last-child {
+      border-right: 0;
+    }
+
+    .strip-item small {
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: .72rem;
+    }
+
+    .strip-item strong {
+      display: block;
+      margin-top: 7px;
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto 64px;
+    }
+
+    .section-head {
+      display: flex;
+      gap: 16px;
+      align-items: end;
+      justify-content: space-between;
+      margin: 30px 0 16px;
+    }
+
+    .section-head h3 {
+      margin: 0;
+      font-size: clamp(1.45rem, 3vw, 2.35rem);
+      line-height: 1;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      margin: 0 0 20px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 3px;
+    }
+
+    .tab {
+      min-height: 38px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: #fff;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .tab.active {
+      color: #fff;
+      border-color: var(--mint);
+      background: var(--mint);
+    }
+
+    .sort {
+      height: 40px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .product {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 10px 22px rgba(76, 38, 31, .08);
+    }
+
+    .product-media {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      background: #f4e7dc;
+      overflow: hidden;
+    }
+
+    .product-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .25s ease;
+    }
+
+    .product:hover img {
+      transform: scale(1.04);
+    }
+
+    .badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      min-height: 26px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--blue);
+      font-size: .72rem;
+      font-weight: 800;
+    }
+
+    .veg {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      display: grid;
+      width: 25px;
+      height: 25px;
+      place-items: center;
+      border: 2px solid var(--mint);
+      background: #fff;
+    }
+
+    .veg:after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--mint);
+    }
+
+    .product-body {
+      padding: 14px;
+    }
+
+    .product h4 {
+      min-height: 42px;
+      margin: 0 0 8px;
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+
+    .meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    .stars {
+      color: var(--gold);
+      font-weight: 900;
+    }
+
+    .desc {
+      min-height: 42px;
+      margin: 0 0 13px;
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.45;
+    }
+
+    .buy-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 9px;
+      align-items: center;
+    }
+
+    .price {
+      color: var(--choco);
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+
+    .mini-actions {
+      display: flex;
+      gap: 7px;
+    }
+
+    .square {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    .add {
+      min-height: 38px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: var(--radius);
+      color: #fff;
+      background: var(--cherry);
+      font-weight: 900;
+    }
+
+    .freshpass {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 24px;
+      align-items: center;
+      margin-top: 32px;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, .18), transparent 28%),
+        linear-gradient(135deg, var(--choco), #74352a 48%, var(--blue));
+      color: #fff;
+    }
+
+    .freshpass > div {
+      padding: 28px;
+    }
+
+    .freshpass h3 {
+      margin: 0 0 10px;
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      line-height: 1;
+    }
+
+    .freshpass p {
+      margin: 0 0 18px;
+      color: rgba(255, 255, 255, .85);
+      line-height: 1.5;
+    }
+
+    .pass-list {
+      display: grid;
+      gap: 10px;
+      color: rgba(255, 255, 255, .92);
+      font-weight: 700;
+    }
+
+    .pass-list span:before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 9px;
+      border-radius: 50%;
+      background: #f7c354;
+    }
+
+    .occasion {
+      background: #fffdf8;
+      border-left: 1px solid rgba(255, 255, 255, .2);
+    }
+
+    .occasion-form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      color: rgba(255, 255, 255, .86);
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .occasion-form input,
+    .occasion-form select {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid rgba(255, 255, 255, .24);
+      border-radius: var(--radius);
+      padding: 0 12px;
+      color: #fff;
+      background: rgba(255, 255, 255, .13);
+      outline: none;
+    }
+
+    .occasion-form input::placeholder {
+      color: rgba(255, 255, 255, .68);
+    }
+
+    .reviews {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .review {
+      min-height: 150px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .review p {
+      margin: 8px 0 16px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .review strong {
+      color: var(--ink);
+    }
+
+    .footer {
+      background: #241714;
+      color: #fff;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr .8fr;
+      gap: 22px;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0;
+    }
+
+    .footer h3,
+    .footer h4 {
+      margin: 0 0 10px;
+    }
+
+    .footer p {
+      margin: 0;
+      color: rgba(255, 255, 255, .74);
+      line-height: 1.55;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
+      background: rgba(20, 12, 10, .55);
+    }
+
+    .overlay.open {
+      display: block;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 50;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      width: min(430px, 100%);
+      height: 100%;
+      background: #fffdf8;
+      box-shadow: -20px 0 55px rgba(36, 23, 20, .26);
+      transform: translateX(105%);
+      transition: transform .25s ease;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-head,
+    .drawer-foot,
+    .modal-head {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .drawer-head,
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .drawer-head h3,
+    .modal-head h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .close {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    .cart-items {
+      overflow: auto;
+      padding: 14px 18px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cart-item img {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: var(--radius);
+    }
+
+    .cart-item h4 {
+      margin: 0 0 5px;
+      font-size: .95rem;
+    }
+
+    .cart-item p {
+      margin: 0 0 9px;
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.35;
+    }
+
+    .qty {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stepper {
+      display: inline-grid;
+      grid-template-columns: 30px 32px 30px;
+      height: 30px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .stepper button {
+      border: 0;
+      background: #fff;
+      font-weight: 900;
+    }
+
+    .stepper span {
+      display: grid;
+      place-items: center;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      font-weight: 800;
+    }
+
+    .totals {
+      display: grid;
+      gap: 9px;
+      padding: 12px 0 16px;
+    }
+
+    .total-line {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+    }
+
+    .total-line.final {
+      color: var(--ink);
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+
+    .promo {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    .promo input {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0 10px;
+      background: #fff;
+    }
+
+    .promo button {
+      min-height: 40px;
+      border: 0;
+      border-radius: var(--radius);
+      color: #fff;
+      background: var(--blue);
+      font-weight: 800;
+    }
+
+    .checkout {
+      width: 100%;
+      min-height: 46px;
+      border: 0;
+      border-radius: var(--radius);
+      color: #fff;
+      background: var(--cherry);
+      font-weight: 900;
+    }
+
+    .modal {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      z-index: 60;
+      display: none;
+      width: min(760px, calc(100% - 26px));
+      max-height: min(90vh, 820px);
+      overflow: auto;
+      border-radius: var(--radius);
+      background: #fffdf8;
+      box-shadow: var(--shadow);
+      transform: translate(-50%, -50%);
+    }
+
+    .modal.open {
+      display: block;
+    }
+
+    .modal-body {
+      padding: 18px;
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .modal .field label {
+      color: var(--ink);
+    }
+
+    .modal input,
+    .modal select,
+    .modal textarea {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0 11px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .modal textarea {
+      min-height: 92px;
+      padding-top: 10px;
+      resize: vertical;
+    }
+
+    .payment-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .pay-option {
+      display: grid;
+      gap: 6px;
+      min-height: 76px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .pay-option input {
+      width: 16px;
+      min-height: 16px;
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .track span {
+      min-height: 48px;
+      padding: 10px;
+      border-radius: var(--radius);
+      color: var(--muted);
+      background: #f5eee8;
+      font-weight: 800;
+      font-size: .84rem;
+    }
+
+    .track span.active {
+      color: #fff;
+      background: var(--mint);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      z-index: 80;
+      display: none;
+      width: min(420px, calc(100% - 32px));
+      padding: 13px 16px;
+      border-radius: var(--radius);
+      color: #fff;
+      background: var(--ink);
+      box-shadow: var(--shadow);
+      transform: translateX(-50%);
+      font-weight: 800;
+    }
+
+    .toast.show {
+      display: block;
+    }
+
+    .empty {
+      display: grid;
+      min-height: 220px;
+      place-items: center;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px) {
+      .nav {
+        grid-template-columns: 1fr auto;
+      }
+
+      .search {
+        grid-column: 1 / -1;
+        order: 3;
+        margin-bottom: 12px;
+      }
+
+      .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .strip-grid,
+      .reviews {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .freshpass,
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav {
+        width: min(100% - 20px, 1180px);
+        gap: 10px;
+      }
+
+      .actions .pill {
+        display: none;
+      }
+
+      .cart-button strong {
+        display: none;
+      }
+
+      .hero,
+      .hero-inner {
+        min-height: 570px;
+      }
+
+      .hero {
+        background-image:
+          linear-gradient(180deg, rgba(36, 23, 20, .82) 0%, rgba(36, 23, 20, .55) 52%, rgba(36, 23, 20, .2) 100%),
+          url("lakhotiyas-hero.png");
+      }
+
+      .hero h2 {
+        max-width: 10ch;
+      }
+
+      .store-strip {
+        transform: translateY(-24px);
+      }
+
+      .strip-grid,
+      .grid,
+      .reviews,
+      .modal-grid,
+      .payment-options,
+      .track {
+        grid-template-columns: 1fr;
+      }
+
+      .strip-item {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .controls,
+      .section-head {
+        display: block;
+      }
+
+      .sort {
+        width: 100%;
+        margin-top: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav" aria-label="Store navigation">
+      <a class="brand" href="#shop" aria-label="Lakhotiyas Cake and Bakers">
+        <span class="brand-mark">LC</span>
+        <span>
+          <h1>Lakhotiyas Cake & Bakers</h1>
+          <small>New Shreya Nagar, Ramanagar, Chhatrapati Sambhajinagar</small>
+        </span>
+      </a>
+
+      <label class="search" aria-label="Search bakery items">
+        <span>Search</span>
+        <input id="searchInput" type="search" placeholder="cakes, cupcakes, photo print, wedding..." autocomplete="off">
+        <button type="button" id="searchButton" aria-label="Search">Go</button>
+      </label>
+
+      <div class="actions">
+        <span class="pill"><strong>4.9</strong> 486 Google reviews</span>
+        <button class="cart-button" id="openCart" type="button" aria-label="Open cart">
+          <span aria-hidden="true">Cart</span>
+          <strong>Cart</strong>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <span class="pill"><strong>Open</strong> closes 10 pm</span>
+        <h2>Fresh cakes, ordered your way.</h2>
+        <p>Pure veg cakes, custom designs, birthday specials, wedding cakes, photo prints, 3D cakes and corporate orders with delivery slots across Chhatrapati Sambhajinagar.</p>
+        <div class="hero-row">
+          <a class="primary" href="#shop">Shop cakes</a>
+          <button class="secondary" type="button" id="heroDeal">Today's fresh deal</button>
+          <a class="ghost" href="tel:09422167906">Call 094221 67906</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="store-strip" aria-label="Store highlights">
+    <div class="strip-grid">
+      <div class="strip-item">
+        <small>Rating</small>
+        <strong>4.9 from 486 Google reviews</strong>
+      </div>
+      <div class="strip-item">
+        <small>Average order</small>
+        <strong>Rs 400-1,400 per person</strong>
+      </div>
+      <div class="strip-item">
+        <small>Speciality</small>
+        <strong>Customized, pure vegetarian cakes</strong>
+      </div>
+      <div class="strip-item">
+        <small>Delivery promise</small>
+        <strong>Fresh, on-time orders for every occasion</strong>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <section id="shop" aria-labelledby="shopTitle">
+      <div class="section-head">
+        <div>
+          <h3 id="shopTitle">Online bakery store</h3>
+          <p>Browse bestsellers, customize cake options, add to cart, and complete a marketplace-style checkout.</p>
+        </div>
+        <span class="pill"><strong>Veg only</strong> homemade quality</span>
+      </div>
+
+      <div class="controls">
+        <div class="tabs" id="categoryTabs" aria-label="Categories"></div>
+        <select class="sort" id="sortSelect" aria-label="Sort products">
+          <option value="popular">Sort: Popular</option>
+          <option value="low">Price: Low to high</option>
+          <option value="high">Price: High to low</option>
+          <option value="rating">Top rated</option>
+        </select>
+      </div>
+
+      <div class="grid" id="productGrid"></div>
+    </section>
+
+    <section class="freshpass" aria-labelledby="passTitle">
+      <div>
+        <h3 id="passTitle">FreshPass for regular celebrations</h3>
+        <p>A demo subscription layer for offices, families, and event planners who place repeat bakery orders.</p>
+        <div class="pass-list">
+          <span>Priority preparation during peak hours</span>
+          <span>Free delivery above Rs 799 inside selected zones</span>
+          <span>Saved addresses, favourite flavours, and repeat orders</span>
+        </div>
+      </div>
+      <div class="occasion">
+        <form class="occasion-form" id="occasionForm">
+          <div class="field">
+            <label for="occasion">Occasion</label>
+            <select id="occasion">
+              <option>Birthday party</option>
+              <option>Wedding</option>
+              <option>Corporate order</option>
+              <option>Cooking class enquiry</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cakeDate">Date needed</label>
+            <input id="cakeDate" type="date">
+          </div>
+          <div class="field">
+            <label for="guestCount">Approx guests</label>
+            <input id="guestCount" type="number" min="1" placeholder="40">
+          </div>
+          <button class="secondary" type="submit">Build occasion cart</button>
+        </form>
+      </div>
+    </section>
+
+    <section aria-labelledby="reviewTitle">
+      <div class="section-head">
+        <div>
+          <h3 id="reviewTitle">Why customers come back</h3>
+          <p>Review themes from the provided Google listing, shaped into storefront proof points.</p>
+        </div>
+      </div>
+      <div class="reviews">
+        <article class="review">
+          <span class="stars">★★★★★</span>
+          <p>Fresh ingredients, creative designs and punctual delivery for custom celebration orders.</p>
+          <strong>Service highlight</strong>
+        </article>
+        <article class="review">
+          <span class="stars">★★★★★</span>
+          <p>Moist chocolate cakes and rich, balanced flavours that feel homemade and premium.</p>
+          <strong>Product highlight</strong>
+        </article>
+        <article class="review">
+          <span class="stars">★★★★★</span>
+          <p>Reasonable prices, friendly support and dependable timing for birthdays and parties.</p>
+          <strong>Value highlight</strong>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h3>Lakhotiyas Cake & Bakers</h3>
+        <p>Bakery and cake shop decorated for birthdays, weddings and parties, specializing in customized fresh cream cakes, 3D cakes, fondant cakes and photo print cakes.</p>
+      </div>
+      <div>
+        <h4>Address</h4>
+        <p>New Shreya Nagar, Ramanagar, Chhatrapati Sambhajinagar, Maharashtra 431005</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>094221 67906<br>Open until 10 pm</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="drawer" id="cartDrawer" aria-label="Shopping cart">
+    <div class="drawer-head">
+      <div>
+        <h3>Your cart</h3>
+        <small id="cartSubtitle">Fresh bakery order</small>
+      </div>
+      <button class="close" id="closeCart" type="button" aria-label="Close cart">X</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="drawer-foot">
+      <div class="promo">
+        <input id="promoInput" type="text" placeholder="Promo code: FRESH10">
+        <button type="button" id="applyPromo">Apply</button>
+      </div>
+      <div class="totals" id="totals"></div>
+      <button class="checkout" id="checkoutButton" type="button">Proceed to checkout</button>
+    </div>
+  </aside>
+
+  <section class="modal" id="customizeModal" aria-modal="true" role="dialog" aria-labelledby="customizeTitle">
+    <div class="modal-head">
+      <h3 id="customizeTitle">Customize cake</h3>
+      <button class="close" type="button" data-close="customizeModal" aria-label="Close customization">X</button>
+    </div>
+    <form class="modal-body" id="customizeForm">
+      <div class="modal-grid">
+        <div class="field">
+          <label for="customWeight">Weight</label>
+          <select id="customWeight">
+            <option value="0.5">0.5 kg</option>
+            <option value="1" selected>1 kg</option>
+            <option value="1.5">1.5 kg</option>
+            <option value="2">2 kg</option>
+            <option value="3">3 kg</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="customFlavour">Flavour</label>
+          <select id="customFlavour">
+            <option>Chocolate chips</option>
+            <option>Rasmalai</option>
+            <option>Black forest</option>
+            <option>Butterscotch</option>
+            <option>Red velvet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="customFinish">Finish</label>
+          <select id="customFinish">
+            <option>Fresh cream</option>
+            <option>Photo print</option>
+            <option>Fondant</option>
+            <option>3D theme</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="customTime">Needed by</label>
+          <select id="customTime">
+            <option>Today, 6-8 pm</option>
+            <option>Tomorrow, 10 am-12 pm</option>
+            <option>Tomorrow, 5-8 pm</option>
+            <option>Custom date on call</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" style="margin-top:14px">
+        <label for="customMessage">Cake message</label>
+        <textarea id="customMessage" maxlength="80" placeholder="Happy Birthday Aarav"></textarea>
+      </div>
+      <button class="checkout" type="submit" style="margin-top:14px">Add customized cake</button>
+    </form>
+  </section>
+
+  <section class="modal" id="checkoutModal" aria-modal="true" role="dialog" aria-labelledby="checkoutTitle">
+    <div class="modal-head">
+      <h3 id="checkoutTitle">Checkout</h3>
+      <button class="close" type="button" data-close="checkoutModal" aria-label="Close checkout">X</button>
+    </div>
+    <form class="modal-body" id="checkoutForm">
+      <div class="modal-grid">
+        <div class="field">
+          <label for="customerName">Full name</label>
+          <input id="customerName" required placeholder="Customer name">
+        </div>
+        <div class="field">
+          <label for="customerPhone">Phone</label>
+          <input id="customerPhone" required inputmode="tel" placeholder="94221 67906">
+        </div>
+        <div class="field">
+          <label for="deliverySlot">Delivery slot</label>
+          <select id="deliverySlot">
+            <option>Today, 6-8 pm</option>
+            <option>Tomorrow, 10 am-12 pm</option>
+            <option>Tomorrow, 5-8 pm</option>
+            <option>Pickup from bakery</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="deliveryZone">Delivery zone</label>
+          <select id="deliveryZone">
+            <option>Ramanagar / Shreya Nagar</option>
+            <option>Usmanpura</option>
+            <option>CIDCO</option>
+            <option>Other area - confirm by call</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" style="margin-top:14px">
+        <label for="customerAddress">Address</label>
+        <textarea id="customerAddress" required placeholder="House, landmark, area, city"></textarea>
+      </div>
+
+      <div class="payment-options" aria-label="Payment method">
+        <label class="pay-option">
+          <input type="radio" name="payment" value="UPI" checked>
+          <strong>UPI</strong>
+          <small>PhonePe, GPay, Paytm</small>
+        </label>
+        <label class="pay-option">
+          <input type="radio" name="payment" value="Card">
+          <strong>Card</strong>
+          <small>Visa, Mastercard, RuPay</small>
+        </label>
+        <label class="pay-option">
+          <input type="radio" name="payment" value="COD">
+          <strong>COD</strong>
+          <small>Pay at delivery</small>
+        </label>
+      </div>
+
+      <button class="checkout" type="submit">Place demo order</button>
+      <div class="track" id="orderTrack" hidden>
+        <span class="active">Order placed</span>
+        <span class="active">Payment demo</span>
+        <span>Preparing</span>
+        <span>Out for delivery</span>
+      </div>
+    </form>
+  </section>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const products = [
+      {
+        id: 1,
+        name: "Chocolate Chips Fresh Cream Cake",
+        category: "Birthday",
+        price: 749,
+        rating: 4.9,
+        badge: "Bestseller",
+        image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80",
+        desc: "Moist chocolate layers with chips and balanced sweetness."
+      },
+      {
+        id: 2,
+        name: "Rasmalai Celebration Cake",
+        category: "Premium",
+        price: 899,
+        rating: 4.8,
+        badge: "Local favourite",
+        image: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=900&q=80",
+        desc: "Indian dessert-inspired cream cake for family occasions."
+      },
+      {
+        id: 3,
+        name: "Photo Print Custom Cake",
+        category: "Custom",
+        price: 1199,
+        rating: 4.9,
+        badge: "Custom",
+        image: "https://images.unsplash.com/photo-1535254973040-607b474cb50d?auto=format&fit=crop&w=900&q=80",
+        desc: "Upload-ready concept for birthdays, anniversaries and events."
+      },
+      {
+        id: 4,
+        name: "3D Cartoon Theme Cake",
+        category: "Custom",
+        price: 1400,
+        rating: 5.0,
+        badge: "Made to order",
+        image: "https://images.unsplash.com/photo-1557925923-cd4648e211a0?auto=format&fit=crop&w=900&q=80",
+        desc: "Theme cake with fondant-style details for children."
+      },
+      {
+        id: 5,
+        name: "Classic Black Forest Cake",
+        category: "Birthday",
+        price: 649,
+        rating: 4.8,
+        badge: "Fresh",
+        image: "https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&fit=crop&w=900&q=80",
+        desc: "Cream, chocolate and cherry notes in a party classic."
+      },
+      {
+        id: 6,
+        name: "Wedding Fresh Cream Cake",
+        category: "Wedding",
+        price: 3200,
+        rating: 4.9,
+        badge: "Event order",
+        image: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=900&q=80",
+        desc: "Elegant tiered cake demo for wedding enquiry checkout."
+      },
+      {
+        id: 7,
+        name: "Cupcake Party Box",
+        category: "Snacks",
+        price: 420,
+        rating: 4.7,
+        badge: "Party box",
+        image: "https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=900&q=80",
+        desc: "Assorted mini treats for school, office and home parties."
+      },
+      {
+        id: 8,
+        name: "Corporate Brownie Tray",
+        category: "Corporate",
+        price: 999,
+        rating: 4.8,
+        badge: "Bulk",
+        image: "https://images.unsplash.com/photo-1590841609987-4ac211afdde1?auto=format&fit=crop&w=900&q=80",
+        desc: "Boxed chocolate brownies for meetings and client gifting."
+      }
+    ];
+
+    const categories = ["All", "Birthday", "Custom", "Premium", "Wedding", "Snacks", "Corporate"];
+    let activeCategory = "All";
+    let cart = [];
+    let promoApplied = false;
+    let customizingProduct = null;
+
+    const rupees = value => "Rs " + value.toLocaleString("en-IN");
+    const grid = document.getElementById("productGrid");
+    const tabs = document.getElementById("categoryTabs");
+    const searchInput = document.getElementById("searchInput");
+    const sortSelect = document.getElementById("sortSelect");
+    const cartDrawer = document.getElementById("cartDrawer");
+    const overlay = document.getElementById("overlay");
+    const cartItems = document.getElementById("cartItems");
+    const cartCount = document.getElementById("cartCount");
+    const totals = document.getElementById("totals");
+    const toast = document.getElementById("toast");
+
+    function init() {
+      renderTabs();
+      renderProducts();
+      renderCart();
+      bindEvents();
+    }
+
+    function bindEvents() {
+      document.getElementById("openCart").addEventListener("click", openCart);
+      document.getElementById("closeCart").addEventListener("click", closePanels);
+      document.getElementById("searchButton").addEventListener("click", renderProducts);
+      document.getElementById("heroDeal").addEventListener("click", () => {
+        addToCart(products[0]);
+        openCart();
+        showToast("Chocolate Chips Cake added with today's fresh deal.");
+      });
+      searchInput.addEventListener("input", renderProducts);
+      sortSelect.addEventListener("change", renderProducts);
+      overlay.addEventListener("click", closePanels);
+      document.getElementById("applyPromo").addEventListener("click", applyPromo);
+      document.getElementById("checkoutButton").addEventListener("click", openCheckout);
+      document.getElementById("occasionForm").addEventListener("submit", buildOccasionCart);
+      document.getElementById("customizeForm").addEventListener("submit", submitCustomization);
+      document.getElementById("checkoutForm").addEventListener("submit", placeOrder);
+      document.querySelectorAll("[data-close]").forEach(button => {
+        button.addEventListener("click", () => closeModal(button.dataset.close));
+      });
+    }
+
+    function renderTabs() {
+      tabs.innerHTML = categories.map(category => `
+        <button class="tab ${category === activeCategory ? "active" : ""}" type="button" data-category="${category}">
+          ${category}
+        </button>
+      `).join("");
+      tabs.querySelectorAll(".tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+          activeCategory = tab.dataset.category;
+          renderTabs();
+          renderProducts();
+        });
+      });
+    }
+
+    function getFilteredProducts() {
+      const query = searchInput.value.trim().toLowerCase();
+      let result = products.filter(product => {
+        const matchesCategory = activeCategory === "All" || product.category === activeCategory;
+        const matchesQuery = !query || [product.name, product.category, product.desc, product.badge].join(" ").toLowerCase().includes(query);
+        return matchesCategory && matchesQuery;
+      });
+
+      if (sortSelect.value === "low") result.sort((a, b) => a.price - b.price);
+      if (sortSelect.value === "high") result.sort((a, b) => b.price - a.price);
+      if (sortSelect.value === "rating") result.sort((a, b) => b.rating - a.rating);
+      if (sortSelect.value === "popular") result.sort((a, b) => b.id === 1 ? 1 : a.id - b.id);
+
+      return result;
+    }
+
+    function renderProducts() {
+      const items = getFilteredProducts();
+      if (!items.length) {
+        grid.innerHTML = `<div class="empty" style="grid-column:1/-1">No cakes found. Try another flavour, occasion or price sort.</div>`;
+        return;
+      }
+
+      grid.innerHTML = items.map(product => `
+        <article class="product">
+          <div class="product-media">
+            <img src="${product.image}" alt="${product.name}" loading="lazy">
+            <span class="badge">${product.badge}</span>
+            <span class="veg" title="Pure vegetarian"></span>
+          </div>
+          <div class="product-body">
+            <h4>${product.name}</h4>
+            <div class="meta">
+              <span class="stars">★ ${product.rating.toFixed(1)}</span>
+              <span>${product.category}</span>
+            </div>
+            <p class="desc">${product.desc}</p>
+            <div class="buy-row">
+              <span class="price">${rupees(product.price)}</span>
+              <div class="mini-actions">
+                <button class="square" type="button" title="Customize" aria-label="Customize ${product.name}" data-customize="${product.id}">+</button>
+                <button class="add" type="button" data-add="${product.id}">Add</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      `).join("");
+
+      grid.querySelectorAll("[data-add]").forEach(button => {
+        button.addEventListener("click", () => {
+          const product = products.find(item => item.id === Number(button.dataset.add));
+          addToCart(product);
+        });
+      });
+
+      grid.querySelectorAll("[data-customize]").forEach(button => {
+        button.addEventListener("click", () => openCustomize(Number(button.dataset.customize)));
+      });
+    }
+
+    function addToCart(product, options = {}) {
+      const optionText = options.optionText || "Standard veg preparation";
+      const itemKey = `${product.id}-${optionText}`;
+      const existing = cart.find(item => item.key === itemKey);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({
+          key: itemKey,
+          id: product.id,
+          name: product.name,
+          price: options.price || product.price,
+          image: product.image,
+          optionText,
+          qty: 1
+        });
+      }
+      renderCart();
+      showToast(`${product.name} added to cart.`);
+    }
+
+    function openCustomize(productId) {
+      customizingProduct = products.find(item => item.id === productId);
+      document.getElementById("customizeTitle").textContent = `Customize ${customizingProduct.name}`;
+      openModal("customizeModal");
+    }
+
+    function submitCustomization(event) {
+      event.preventDefault();
+      if (!customizingProduct) return;
+      const weight = Number(document.getElementById("customWeight").value);
+      const flavour = document.getElementById("customFlavour").value;
+      const finish = document.getElementById("customFinish").value;
+      const time = document.getElementById("customTime").value;
+      const message = document.getElementById("customMessage").value.trim();
+      const finishCost = finish === "3D theme" ? 450 : finish === "Fondant" ? 300 : finish === "Photo print" ? 180 : 0;
+      const customPrice = Math.round(customizingProduct.price * weight + finishCost);
+      const optionText = `${weight} kg, ${flavour}, ${finish}, ${time}${message ? ", Message: " + message : ""}`;
+      addToCart(customizingProduct, { price: customPrice, optionText });
+      closeModal("customizeModal");
+      openCart();
+    }
+
+    function renderCart() {
+      const itemCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      cartCount.textContent = itemCount;
+      document.getElementById("cartSubtitle").textContent = itemCount ? `${itemCount} item${itemCount > 1 ? "s" : ""} ready for checkout` : "Fresh bakery order";
+
+      if (!cart.length) {
+        cartItems.innerHTML = `<div class="empty">Your cart is empty.<br>Add cakes, cupcakes or custom orders to continue.</div>`;
+      } else {
+        cartItems.innerHTML = cart.map(item => `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}">
+            <div>
+              <h4>${item.name}</h4>
+              <p>${item.optionText}</p>
+              <div class="qty">
+                <strong>${rupees(item.price * item.qty)}</strong>
+                <span class="stepper">
+                  <button type="button" data-dec="${item.key}" aria-label="Decrease quantity">-</button>
+                  <span>${item.qty}</span>
+                  <button type="button" data-inc="${item.key}" aria-label="Increase quantity">+</button>
+                </span>
+              </div>
+            </div>
+          </div>
+        `).join("");
+
+        cartItems.querySelectorAll("[data-dec]").forEach(button => {
+          button.addEventListener("click", () => changeQty(button.dataset.dec, -1));
+        });
+        cartItems.querySelectorAll("[data-inc]").forEach(button => {
+          button.addEventListener("click", () => changeQty(button.dataset.inc, 1));
+        });
+      }
+
+      renderTotals();
+    }
+
+    function getTotals() {
+      const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const discount = promoApplied ? Math.round(subtotal * 0.1) : 0;
+      const delivery = subtotal - discount >= 799 || subtotal === 0 ? 0 : 60;
+      const tax = Math.round((subtotal - discount) * 0.05);
+      const grand = subtotal - discount + delivery + tax;
+      return { subtotal, discount, delivery, tax, grand };
+    }
+
+    function renderTotals() {
+      const total = getTotals();
+      totals.innerHTML = `
+        <div class="total-line"><span>Subtotal</span><strong>${rupees(total.subtotal)}</strong></div>
+        <div class="total-line"><span>Discount</span><strong>-${rupees(total.discount)}</strong></div>
+        <div class="total-line"><span>Delivery</span><strong>${total.delivery ? rupees(total.delivery) : "Free"}</strong></div>
+        <div class="total-line"><span>Estimated GST</span><strong>${rupees(total.tax)}</strong></div>
+        <div class="total-line final"><span>Total</span><strong>${rupees(total.grand)}</strong></div>
+      `;
+    }
+
+    function changeQty(key, delta) {
+      const item = cart.find(entry => entry.key === key);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) cart = cart.filter(entry => entry.key !== key);
+      renderCart();
+    }
+
+    function applyPromo() {
+      const code = document.getElementById("promoInput").value.trim().toUpperCase();
+      if (code === "FRESH10") {
+        promoApplied = true;
+        renderCart();
+        showToast("Promo FRESH10 applied.");
+      } else {
+        showToast("Use demo promo code FRESH10.");
+      }
+    }
+
+    function openCart() {
+      cartDrawer.classList.add("open");
+      overlay.classList.add("open");
+    }
+
+    function closePanels() {
+      cartDrawer.classList.remove("open");
+      document.querySelectorAll(".modal").forEach(modal => modal.classList.remove("open"));
+      overlay.classList.remove("open");
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.add("open");
+      overlay.classList.add("open");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("open");
+      if (!cartDrawer.classList.contains("open")) overlay.classList.remove("open");
+    }
+
+    function openCheckout() {
+      if (!cart.length) {
+        showToast("Add at least one item before checkout.");
+        return;
+      }
+      closePanels();
+      openModal("checkoutModal");
+    }
+
+    function placeOrder(event) {
+      event.preventDefault();
+      const payment = document.querySelector("input[name='payment']:checked").value;
+      const total = getTotals().grand;
+      const orderId = "LCB" + Math.floor(100000 + Math.random() * 900000);
+      document.getElementById("orderTrack").hidden = false;
+      showToast(`Demo order ${orderId} placed via ${payment}. Total ${rupees(total)}.`);
+      cart = [];
+      promoApplied = false;
+      renderCart();
+      setTimeout(() => {
+        closePanels();
+        showToast(`Order ${orderId} is now preparing.`);
+      }, 2200);
+    }
+
+    function buildOccasionCart(event) {
+      event.preventDefault();
+      const occasion = document.getElementById("occasion").value;
+      const guests = Number(document.getElementById("guestCount").value || 20);
+      const recommended = occasion === "Corporate order" ? products[7] : occasion === "Wedding" ? products[5] : products[0];
+      const qty = Math.max(1, Math.ceil(guests / 30));
+      for (let i = 0; i < qty; i += 1) addToCart(recommended, { optionText: `${occasion} recommendation for approx ${guests} guests` });
+      openCart();
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+
+    init();
+  </script>
+</body>
+</html>
